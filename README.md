@@ -40,12 +40,24 @@ To deploy it to your account, make sure you have credentials available to the CL
 ```
 aws sso login --profile yourprofile
 ```
-or by using `aws configure` 
+or by using `aws configure`
+
+Run the following AWS CLI commnad to validate your session details
+
+```
+$ aws sts get-caller-identity
+```
 
 At this point you can now synthesize the CloudFormation template for this code.
 
 ```
 $ cdk synth [--profile yourprofile]
+```
+
+Deploying stacks with the AWS CDK requires dedicated Amazon S3 buckets and other containers to be available to AWS CloudFormation during deployment. If you are using AWS CDK to provision resources in your AWS account for the first time, run the following command.
+
+```
+$ cdk bootstrap [--profile yourprofile]
 ```
 
 To deploy it to your account, make sure you have credentials available to the CLI, then
