@@ -61,6 +61,7 @@ class RepoPipelineStack(Stack):
             "PipelineArtifactsBucket",
             encryption=s3.BucketEncryption.S3_MANAGED,
             removal_policy=cdk.RemovalPolicy.DESTROY,
+            auto_delete_objects=True,
         )
 
         # create the pipeline and tell it to use the artifacts bucket

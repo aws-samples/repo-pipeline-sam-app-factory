@@ -7,7 +7,6 @@ import configparser
 
 import aws_cdk as cdk
 from aws_cdk import Aspects
-from cdk_nag import AwsSolutionsChecks, NagSuppressions, NagPackSuppression
 
 from stacks.repo_pipeline_stack import RepoPipelineStack
 
@@ -42,8 +41,6 @@ repo_pipeline_stack = RepoPipelineStack(
     params=params,
     env=deploy_environment,
 )
-
-# Aspects.of(repo_pipeline_stack).add(AwsSolutionsChecks())
 
 if params["app_name"]:
     Aspects.of(app).add(cdk.Tag("app", params["app_name"]))
