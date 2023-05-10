@@ -7,6 +7,7 @@ import configparser
 
 import aws_cdk as cdk
 from aws_cdk import Aspects
+from cdk_nag import AwsSolutionsChecks, NagSuppressions, NagPackSuppression
 
 from stacks.repo_pipeline_stack import RepoPipelineStack
 
@@ -35,19 +36,21 @@ deploy_environment = cdk.Environment(
     account=params["aws_account"], region=params["aws_region"]
 )
 
-RepoPipelineStack(
+repo_pipeline_stack = RepoPipelineStack(
     app,
-    "RepoPipelineStack",
+    params["app_env"] + "-repopipeline-stack",
     params=params,
     env=deploy_environment,
 )
 
+# Aspects.of(repo_pipeline_stack).add(AwsSolutionsChecks())
+
 if params["app_name"]:
-    Aspects.of(app).add(cdk.Tag("app-name", params["app_name"]))
+    Aspects.of(app).add(cdk.Tag("app", params["app_name"]))
 
 if params["environment"]:
     Aspects.of(app).add(cdk.Tag("environment", params["environment"]))
 
-Aspects.of(app).add(cdk.Tag("created-by", params["user"]))
+Aspects.of(app).add(cdk.Tag("created", params["user"]))
 
 app.synth()
