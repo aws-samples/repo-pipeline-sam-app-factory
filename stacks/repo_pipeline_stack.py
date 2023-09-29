@@ -48,7 +48,7 @@ class RepoPipelineStack(Stack):
             policy_statement = iam.PolicyStatement(
                 actions=["codecommit:GitPull", "codecommit:GitPush"],
                 effect=iam.Effect.ALLOW,
-                resources=[self.code_repo.repository_arn],
+                resources=[code_repo.repository_arn],
             )
             custom_policy_document = iam.PolicyDocument(statements=[policy_statement])
 
